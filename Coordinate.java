@@ -11,10 +11,10 @@ class Coordinate extends Blank<Integer>{
 	
 	//Constructors:
 	Coordinate(int x, int y){
-		super(0);
 		this.xCoordinate = x; 
 		this.yCoordinate = y; 
 		this.squareValue = Coordinate.calculateSquareValue(x, y);
+		this.value = 0;
 		this.valueLocked = false; 
 	}
 	
@@ -71,8 +71,7 @@ class Coordinate extends Blank<Integer>{
 	
 	@Override
 	public boolean checkValueAtBlank(Integer checkValue){
-		int unwrappedCheckValue = checkValue;
-		if (checkXRow(unwrappedCheckValue) && checkYRow(unwrappedCheckValue) && checkSquare(unwrappedCheckValue) == true){
+		if (checkXRow(checkValue) && checkYRow(checkValue) && checkSquare(checkValue) == true){
 			return true; 
 		}
 		return false; 

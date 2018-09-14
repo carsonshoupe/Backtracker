@@ -43,6 +43,28 @@ class SudokuBoard{
 	public Coordinate[][] getCoordinates(){return this.coordinates;} 
 	public void setCoordinates(Coordinate[][] updatedCoordinates){this.coordinates = updatedCoordinates;}
 	
+	public Coordinate[] getUnlockedCoordinates(){
+		int unlockedCoordinatesLength = 0; 
+		for (int yCounter = 0; yCounter<9; yCounter++){
+			for (int xCounter = 0; xCounter<9; xCounter++){
+				if (this.getCoordinates()[yCounter][xCounter].getValueLocked() == false){
+					unlockedCoordinatesLength++; 
+				}
+			}
+		}
+		Coordinate[] unlockedCoordinatesArray = new Coordinate[unlockedCoordinatesLength];
+		int orderedCoordinatesCounter = 0; 
+		for (int yCounter = 0; yCounter<9; yCounter++){
+			for (int xCounter = 0; xCounter<9; xCounter++){
+				if (this.getCoordinates()[yCounter][xCounter].getValueLocked() == false){
+					unlockedCoordinatesArray[orderedCoordinatesCounter] = this.getCoordinates()[xCounter][yCounter];
+					orderedCoordinatesCounter++;
+				}
+			}
+		}
+		return unlockedCoordinatesArray; 
+	}
+	
 	@Override
 	public String toString(){ 
 	//Not sure if its better to save the string formatted as I want it to print or to save it as a flat string of numbers.  Same follows for the toString fxn for Coordinate. 

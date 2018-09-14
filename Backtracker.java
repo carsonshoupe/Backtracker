@@ -26,7 +26,7 @@ class Backtracker<V>{
 		checkValues = inputCheckValues; 
 	}
 	
-	public Blank[] runBacktracker() throws UnimplementedFunctionException{
+	public Blank[] runBacktracker(){
 		int tracker = 0; 
 		while (tracker < blanks.length){
 			if (tryCheckValuesInBlank(blanks[tracker]) == true){
@@ -40,7 +40,7 @@ class Backtracker<V>{
 		return this.blanks; 
 	}
 	
-	public boolean tryCheckValuesInBlank(Blank inputBlank) throws UnimplementedFunctionException{
+	public boolean tryCheckValuesInBlank(Blank inputBlank){
 		int checkValuesIndex; 
 		if (inputBlank.getValue() == null){
 			checkValuesIndex = 0; 

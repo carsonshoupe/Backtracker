@@ -1,22 +1,12 @@
-class Blank<V>{
+abstract class Blank<V>{
 	//Instance Variables:
-	private V value;  
-	
-	//Constructors: 
-	Blank(V inputV){
-		this.value = inputV; 
-	}
+	protected V value;  
 	
 	//Methods:
 	public V getValue(){return this.value;}
+	public void setValue(V inputValue){this.value = inputValue;}
+	abstract boolean checkValueAtBlank(V checkValue);
 	
-	public void setValue(V inputValue){
-		this.value = inputValue; 
-	}
-	
-	public boolean checkValueAtBlank(V checkValue) throws UnimplementedFunctionException{
-		throw new UnimplementedFunctionException();
-	}
 }
 		
 		
