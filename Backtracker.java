@@ -4,20 +4,23 @@ class Backtracker<V>{
 	//Instance Variables: 
 	private Blank[] blanks; 
 	private ArrayList<V> checkValues = new ArrayList<V>(); 
+	private BacktrackableObject board; 
 	
 	
 	
 	
 	//Constructors: 
-	Backtracker(Blank[] inputBlanks, ArrayList<V> inputCheckValues){
+	Backtracker(Blank[] inputBlanks, ArrayList<V> inputCheckValues, BacktrackableObject inputBoard){
 		this.blanks = inputBlanks; 
 		this.checkValues = inputCheckValues; 
+		this.board = inputBoard;
 	}
 		
 	
 	//Methods:
 	public Blank[] getBlanks(){return this.blanks;}
 	public ArrayList<V> getCheckValues(){return this.checkValues;}
+	public BacktrackableObject getBoard(){return this.board;}
 	
 	public void setBlanks(Blank[] inputBlanks){
 		this.blanks = inputBlanks;
@@ -29,6 +32,7 @@ class Backtracker<V>{
 	public Blank[] runBacktracker(){
 		int tracker = 0; 
 		while (tracker < blanks.length){
+			//System.out.println(blanks[tracker].toString());
 			if (tryCheckValuesInBlank(blanks[tracker]) == true){
 				tracker++;
 			}
@@ -50,12 +54,14 @@ class Backtracker<V>{
 		}
 		
 		while (checkValuesIndex < this.checkValues.size()){
-			if (inputBlank.checkValueAtBlank(checkValues.get(checkValuesIndex)) == true){
+			//System.out.println("checkValuesIndex: " + checkValuesIndex);
+			//System.out.println("checkValue: " + checkValues.get(checkValuesIndex));
+			if (inputBlank.checkValueAtBlank(checkValues.get(checkValuesIndex), this.board) == true){
 				inputBlank.setValue(checkValues.get(checkValuesIndex)); 
 				return true; 
 			}
 			else{
-				continue;
+				checkValuesIndex++;
 			}
 		}
 		return false;

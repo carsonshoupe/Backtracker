@@ -1,4 +1,4 @@
-class SudokuBoard{
+class SudokuBoard extends BacktrackableObject{
 	//Instance Variables:
 	private Coordinate[][] coordinates = new Coordinate[9][9];
 	private String boardInputAsString; 
@@ -19,11 +19,11 @@ class SudokuBoard{
 				if (tempInt !=0){
 					this.coordinates[xCounter][yCounter].setValueLocked(true); //locking preset values
 				}
-				this.coordinates[xCounter][yCounter].setMySudokuBoard(this);
 				
 				locationCounter++;
 			}
 		}
+		setSingleDimArrOfCoordinates();
 	}
 	
 	SudokuBoard(Coordinate[][] inputCoordinates){ //clones coordinates
@@ -33,6 +33,7 @@ class SudokuBoard{
 				this.coordinates[xCounter][yCounter] = updatedCoordinate; 
 			}
 		}
+		setSingleDimArrOfCoordinates();
 	}
 	
 	SudokuBoard(){
@@ -56,7 +57,7 @@ class SudokuBoard{
 		int orderedCoordinatesCounter = 0; 
 		for (int yCounter = 0; yCounter<9; yCounter++){
 			for (int xCounter = 0; xCounter<9; xCounter++){
-				if (this.getCoordinates()[yCounter][xCounter].getValueLocked() == false){
+				if (this.getCoordinates()[xCounter][yCounter].getValueLocked() == false){
 					unlockedCoordinatesArray[orderedCoordinatesCounter] = this.getCoordinates()[xCounter][yCounter];
 					orderedCoordinatesCounter++;
 				}
@@ -64,6 +65,23 @@ class SudokuBoard{
 		}
 		return unlockedCoordinatesArray; 
 	}
+	
+	public void setSingleDimArrOfCoordinates(){
+		Coordinate[] outputArr = new Coordinate[81];
+		int counter = 0;
+		for (int yCounter = 0; yCounter<9; yCounter++){
+			for (int xCounter = 0; xCounter<9; xCounter++){
+				outputArr[counter] = this.getCoordinates()[xCounter][yCounter]; 
+				counter++;
+			}
+		}
+		this.setArrOfBlanks(outputArr); 
+	}
+	
+	
+	
+	
+	
 	
 	@Override
 	public String toString(){ 
