@@ -38,7 +38,7 @@ class SudokuBoard extends BacktrackableObject{
 	
 	SudokuBoard(){
 		this("000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-		}
+	}
 	
 	//Methods:
 	public Coordinate[][] getCoordinates(){return this.coordinates;} 

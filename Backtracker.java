@@ -29,10 +29,14 @@ class Backtracker<V>{
 		checkValues = inputCheckValues; 
 	}
 	
-	public Blank[] runBacktracker(){
+	public Blank[] runBacktracker() throws UnsolveableException{
 		int tracker = 0; 
 		while (tracker < blanks.length){
 			//System.out.println(blanks[tracker].toString());
+			if (tracker == -1){ //Quick exception check//
+				throw new UnsolveableException("There is no combination of values that makes this board work.");
+			}				
+			
 			if (tryCheckValuesInBlank(blanks[tracker]) == true){
 				tracker++;
 			}

@@ -60,12 +60,15 @@ public class BacktrackerTester{
 	 */
 
 	@Test
-	public void testBacktracker(){		
-		Backtracker bt = new Backtracker(blanksForBacktracker, arrayListForBacktracker, testSudokuBoard);
-		
-		Coordinate[] ans = (Coordinate[]) bt.runBacktracker();
-		
-		testSudokuBoard.printSudokuBoard();
+	public void testBacktracker(){	
+		try{
+			Backtracker bt = new Backtracker(blanksForBacktracker, arrayListForBacktracker, testSudokuBoard);
+			Coordinate[] ans = (Coordinate[]) bt.runBacktracker();
+			testSudokuBoard.printSudokuBoard();
+		}
+		catch(UnsolveableException e) {
+			System.out.println(e.getMessage()); 
+		}
 		 
 	}
 	
