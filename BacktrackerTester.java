@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class BacktrackerTester{
 	private SudokuBoard testSudokuBoard; 
 	private Blank[] blanksForBacktracker;
-	private ArrayList<Integer> arrayListForBacktracker;
+	private Integer[] checkValuesForBacktracker;
 	
 	@Before
 	public void setUp(){
@@ -15,11 +15,11 @@ public class BacktrackerTester{
 		
 		this.blanksForBacktracker = testSudokuBoard.getUnlockedCoordinates();
 		
-		this.arrayListForBacktracker = new ArrayList<Integer>();
+		this.checkValuesForBacktracker = new Integer[9];
 		for (int counter = 1; counter < 10; counter++){
-			arrayListForBacktracker.add(counter);
+			checkValuesForBacktracker[counter-1] = counter;
 		}
-		System.out.println(this.testSudokuBoard.toString()); 
+		this.testSudokuBoard.printSudokuBoard(); 
 	}
 	/* 
 	@Test
@@ -61,13 +61,17 @@ public class BacktrackerTester{
 
 	@Test
 	public void testBacktracker(){	
+		System.out.println(Arrays.toString(this.checkValuesForBacktracker));
 		try{
-			Backtracker bt = new Backtracker(blanksForBacktracker, arrayListForBacktracker, testSudokuBoard);
+			Backtracker bt = new SudokuBacktracker((Coordinate[]) blanksForBacktracker, checkValuesForBacktracker, testSudokuBoard);
 			Coordinate[] ans = (Coordinate[]) bt.runBacktracker();
 			testSudokuBoard.printSudokuBoard();
 		}
 		catch(UnsolveableException e) {
 			System.out.println(e.getMessage()); 
+		}
+		catch(BacktrackerException ex){
+			System.out.println(ex.getMessage());
 		}
 		 
 	}

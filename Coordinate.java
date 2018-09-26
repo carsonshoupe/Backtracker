@@ -13,7 +13,6 @@ class Coordinate extends Blank<Integer>{
 		this.xCoordinate = x; 
 		this.yCoordinate = y; 
 		this.squareValue = Coordinate.calculateSquareValue(x, y);
-		this.value = 0;
 		this.valueLocked = false; 
 	}
 	
@@ -65,85 +64,6 @@ class Coordinate extends Blank<Integer>{
 	}
 	
 	public void printCoordinate(){System.out.println(this.toString());}
-	
-	@Override
-	public boolean checkValueAtBlank(Integer checkValue, BacktrackableObject inputBacktrackableObject){ //Only accepts SudokuBoards
-		SudokuBoard inputBoard = (SudokuBoard) inputBacktrackableObject;
-		
-		if (checkXRow(checkValue, inputBoard) && checkYRow(checkValue, inputBoard) && checkSquare(checkValue, inputBoard) == true){
-			return true; 
-		}
-		return false; 
-	}
-		
-	public boolean checkXRow(int checkValue, SudokuBoard inputBoard){
-		int xCoordinate = this.getXCoordinate(); 
-		Coordinate[][] sudokuBoardCoordinates = inputBoard.getCoordinates(); 
-		
-		for (int yCounter = 0; yCounter < 9; yCounter++){
-			int currentValue; 
-			if (sudokuBoardCoordinates[xCoordinate-1][yCounter].getValue() == null){
-				currentValue = 0;
-			}
-			else{
-				currentValue = sudokuBoardCoordinates[xCoordinate-1][yCounter].getValue();
-			}
-			if (sudokuBoardCoordinates[xCoordinate-1][yCounter].equals(this)){
-				continue;
-			}
-			if (checkValue == currentValue){
-				return false; 
-			}
-		}
-		return true; 
-	}
-	
-	public boolean checkYRow(int checkValue, SudokuBoard inputBoard){
-		int yCoordinate = this.getYCoordinate(); 
-		Coordinate[][] sudokuBoardCoordinates = inputBoard.getCoordinates(); 
-		
-		for (int xCounter = 0; xCounter < 9; xCounter++){
-			int currentValue; 
-			if (sudokuBoardCoordinates[xCounter][yCoordinate-1].getValue() == null){
-				currentValue = 0;
-			}
-			else{
-				currentValue = sudokuBoardCoordinates[xCounter][yCoordinate-1].getValue();
-			}
-			if (sudokuBoardCoordinates[xCounter][yCoordinate-1].equals(this)){
-				continue;
-			}
-			if (checkValue == currentValue){
-				return false; 
-			}
-		}
-		return true; 
-		}
-	
-	public boolean checkSquare(int checkValue, SudokuBoard inputBoard){
-		int checkSquareValue = this.getSquareValue(); 
-		
-		Coordinate[][] sudokuBoardCoordinates = inputBoard.getCoordinates(); 
-		
-		for (int yCounter = 0; yCounter<9; yCounter++){
-			for (int xCounter = 0; xCounter<9; xCounter++){
-				Coordinate checkCoordinate = sudokuBoardCoordinates[xCounter][yCounter];
-				if (checkCoordinate.getValue() == null){
-					checkCoordinate.setValue(0); 
-				}
-				//System.out.println("checkCoordinate Info: " + checkCoordinate.toString());
-				if (checkCoordinate.equals(this)){
-					continue;
-				}
-				if (checkSquareValue == checkCoordinate.getSquareValue()){
-					if (checkValue == checkCoordinate.getValue()){
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
 }
 		
 		

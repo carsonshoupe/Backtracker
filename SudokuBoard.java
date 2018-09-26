@@ -13,10 +13,14 @@ class SudokuBoard extends BacktrackableObject{
 				
 				char tempChar = boardAsNumbers.charAt(locationCounter);
 				int tempInt = Integer.parseInt(String.valueOf(tempChar)); //converting the charAt char to an int
+				if (tempInt == 0){
+					this.coordinates[xCounter][yCounter].setValue(null);
+				}
+				else{
+					this.coordinates[xCounter][yCounter].setValue(tempInt); 
+				}
 				
-				this.coordinates[xCounter][yCounter].setValue(tempInt); 
-				
-				if (tempInt !=0){
+				if (tempInt != 0){
 					this.coordinates[xCounter][yCounter].setValueLocked(true); //locking preset values
 				}
 				
@@ -78,26 +82,26 @@ class SudokuBoard extends BacktrackableObject{
 		this.setArrOfBlanks(outputArr); 
 	}
 	
-	
-	
-	
-	
-	
 	@Override
 	public String toString(){ 
 	//Not sure if its better to save the string formatted as I want it to print or to save it as a flat string of numbers.  Same follows for the toString fxn for Coordinate. 
 		String resultString = ""; 
+		Coordinate[][] currentCoordinates = this.getCoordinates();
 		for (int yCounter = 0; yCounter<9; yCounter++){
 			for (int xCounter = 0; xCounter<9; xCounter++){
-				Coordinate[][] currentCoordinates = this.getCoordinates();
-				resultString = resultString + currentCoordinates[xCounter][yCounter].getValue() +("   ");
+				if (currentCoordinates[xCounter][yCounter].getValue() == null){
+					resultString = resultString + "_   "; 
+				}
+				else{
+					resultString = resultString + currentCoordinates[xCounter][yCounter].getValue() +("   ");
+				}
 			}
 			resultString = resultString + "\n"; 
 		}
 		return resultString; 
 	}
 	
-	public void printSudokuBoard(){System.out.println(this.toString());}
+	public void printSudokuBoard(){System.out.println("\n" + this.toString());}
 	
 	@Override
 	public SudokuBoard clone(){

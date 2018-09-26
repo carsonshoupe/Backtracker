@@ -1,67 +1,63 @@
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
-class Backtracker<V>{
+abstract class Backtracker<V>{
 	//Instance Variables: 
-	private Blank[] blanks; 
-	private ArrayList<V> checkValues = new ArrayList<V>(); 
-	private BacktrackableObject board; 
-	
-	
-	
-	
-	//Constructors: 
-	Backtracker(Blank[] inputBlanks, ArrayList<V> inputCheckValues, BacktrackableObject inputBoard){
-		this.blanks = inputBlanks; 
-		this.checkValues = inputCheckValues; 
-		this.board = inputBoard;
-	}
+	protected Blank[] blanks; 
+	protected V[] checkValues; 
+	protected BacktrackableObject board; 
 		
 	
 	//Methods:
 	public Blank[] getBlanks(){return this.blanks;}
-	public ArrayList<V> getCheckValues(){return this.checkValues;}
+	public V[] getCheckValues(){return this.checkValues;}
 	public BacktrackableObject getBoard(){return this.board;}
+	public void setBlanks(Blank[] inputBlanks){this.blanks = inputBlanks;}
+	public void setCheckValues(V[] inputCheckValues){this.checkValues = inputCheckValues;}
+	public void setBacktrackableObject(BacktrackableObject inputBoard){this.board = inputBoard;} 
 	
-	public void setBlanks(Blank[] inputBlanks){
-		this.blanks = inputBlanks;
-	}
-	public void setCheckValues(ArrayList<V> inputCheckValues){
-		checkValues = inputCheckValues; 
-	}
+	public abstract boolean checkValueAtBlank(V checkValue, Blank inputBlank);
+	//give checkValueAtBlank a value and a blank, and it tells you whether that value meets the conditions you provide it. 
 	
-	public Blank[] runBacktracker() throws UnsolveableException{
-		int tracker = 0; 
-		while (tracker < blanks.length){
-			//System.out.println(blanks[tracker].toString());
-			if (tracker == -1){ //Quick exception check//
+	public Blank[] runBacktracker() throws UnsolveableException, BacktrackerException{
+		int blankTracker = 0; 
+		while (blankTracker < blanks.length){
+			if (blankTracker == -1){ //Quick exception check//
 				throw new UnsolveableException("There is no combination of values that makes this board work.");
-			}				
-			
-			if (tryCheckValuesInBlank(blanks[tracker]) == true){
-				tracker++;
+			}			
+			if (findWorkingValueForBlank(blanks[blankTracker]) == true){
+				blankTracker++;
 			}
 			else{
-				blanks[tracker].setValue(null); 
-				tracker--; 
+				blanks[blankTracker].setValue(null); 
+				blankTracker--; 
 			}
 		}
 		return this.blanks; 
 	}
 	
-	public boolean tryCheckValuesInBlank(Blank inputBlank){
-		int checkValuesIndex; 
+	public boolean findWorkingValueForBlank(Blank inputBlank) throws BacktrackerException{
+		//Finds and sets a working value for a blank
+		int checkValuesIndex = -1; 
 		if (inputBlank.getValue() == null){
 			checkValuesIndex = 0; 
 		}
 		else{
-			checkValuesIndex = this.checkValues.indexOf(inputBlank.getValue())+1; 
+			for (int finder = 0; finder<checkValues.length; finder++){
+				if (Objects.deepEquals(checkValues[finder], inputBlank.getValue()) == true){
+					checkValuesIndex = finder+1; 
+					break;
+				}
+			}
 		}
 		
-		while (checkValuesIndex < this.checkValues.size()){
-			//System.out.println("checkValuesIndex: " + checkValuesIndex);
-			//System.out.println("checkValue: " + checkValues.get(checkValuesIndex));
-			if (inputBlank.checkValueAtBlank(checkValues.get(checkValuesIndex), this.board) == true){
-				inputBlank.setValue(checkValues.get(checkValuesIndex)); 
+		if (checkValuesIndex == -1){
+			throw new BacktrackerException("Backtracker failed to find the value in the blank in the set of checkvalues."); 
+		}
+		
+		while (checkValuesIndex < this.checkValues.length){
+			if (checkValueAtBlank(checkValues[checkValuesIndex], inputBlank) == true){
+				inputBlank.setValue(checkValues[checkValuesIndex]); 
 				return true; 
 			}
 			else{
@@ -71,36 +67,3 @@ class Backtracker<V>{
 		return false;
 	}
 }
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-				

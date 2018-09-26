@@ -5,9 +5,6 @@ abstract class Blank<V>{
 	//Methods:
 	public V getValue(){return this.value;}
 	public void setValue(V inputValue){this.value = inputValue;}
-	
-	abstract boolean checkValueAtBlank(V checkValue, BacktrackableObject inputBoard);
-	
 }
 		
 		
